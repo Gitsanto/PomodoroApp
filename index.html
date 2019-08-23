@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pomodoro Clock</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <!--material icon  -->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <!--Import materialize.css-->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
+    <!-- Theme CSS -->
+     <link rel="stylesheet" href="assets/css/pomodoroStyle.css">
+
+</head>
+<body>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+
+<div class="container">
+  <h1>Pomodoro Timer</h1>
+  
+  <div id="pomodoro">  
+    <div id="status"></div>
+    <div class="timerDisplay">25:00</div>
+    <button id="start-btn" class="btn">START</button>
+  </div>
+  
+  <div class="settings">
+    <div id="work">
+      <p>Work Duration</p>
+      <button class="btn-settings" id="work-plus">+</button>
+      <div><span id="work-min">25</span> mins</div>
+      <button class="btn-settings" id="work-minus">-</button>
+    </div>
+    
+    <button id="reset" class="btn">RESET</button>
+    
+    <div id="break">
+      <p>Break Duration</p>
+      <button class="btn-settings" id="break-plus">+</button>
+      <div><span id="break-min">5</span> mins</div>
+      <button class="btn-settings" id="break-minus">-</button>
+    </div>
+  </div>
+
+  <div id="tracking">
+    <p>Tracking</p>
+   <!-- Editable table -->
+<div class="card">
+    <!-- <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editable table</h3> -->
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+              class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+              <span class="table-add"><button>Add Table</button></span>
+              <span id="export-btn"><button >Export</button></span>
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <thead>
+            <tr>
+              <th class="text-center">Type</th>
+              <th class="text-center">Length</th>
+              <th class="text-center">Started</th>
+              <th class="text-center">Ended</th>
+              <th class="text-center">Setting</th>
+              <!-- <th class="text-center">Remove</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="pt-3-half" contenteditable="true">Working</td>
+              <td class="pt-3-half" contenteditable="true">25</td>
+              <td class="pt-3-half" contenteditable="true">2019-08-23 15:30:00</td>
+              <td class="pt-3-half" contenteditable="true">2019-08-23 15:55:00</td>
+              <td>
+                <span class="table-remove"><i type="button"
+                  class="material-icons white-text red">clear</i></span>
+              <span class="table-up"><i type="button"
+                    class="material-icons">vertical_align_top</i></span>
+              <span class="table-down"><i type="button"
+                      class="material-icons">vertical_align_bottom</i></span>
+              </td>
+              
+            </tr>
+            <!-- This is our clonable table line -->
+            <tr>
+              <td class="pt-3-half" contenteditable="true">Working</td>
+              <td class="pt-3-half" contenteditable="true">25</td>
+              <td class="pt-3-half" contenteditable="true">2019-08-23 15:30:00</td>
+              <td class="pt-3-half" contenteditable="true">2019-08-23 15:55:00</td>
+              <td>
+                <span class="table-remove"><i type="button"
+                    class="material-icons">clear</i></span>
+                <span class="table-up"><i type="button"
+                      class="material-icons">vertical_align_top</i></span>
+                <span class="table-down"><i type="button"
+                        class="material-icons">vertical_align_bottom</i></span>
+                  </td>
+            </tr>
+
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Editable table -->
+  </div>
+
+<div id="export"></div>
+
+</div>
+<!-- bootstrap dependency -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- custom -->
+<script type="text/javascript" src="assets/js/pomodoro.js"></script>
+
+</body>
+</html>
