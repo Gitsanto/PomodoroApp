@@ -9,6 +9,7 @@ let timerTime = "25:00";
 const status = document.querySelector("#status");
 const timerDisplay = document.querySelector(".timerDisplay");
 const startBtn = document.querySelector("#start-btn");
+const endBtn = document.querySelector("#end-btn");
 const resetBtn = document.querySelector("#reset");
 const workMin = document.querySelector("#work-min");
 const breakMin = document.querySelector("#break-min");
@@ -17,27 +18,6 @@ const alarm = document.createElement('audio'); // A bell sound will play when th
 alarm.setAttribute("src", "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3");
 
 
-const $tableID = $('#table');
-const $BTN = $('#export-btn');
-const $EXPORT = $('#export');
-const $AddTable = $('.table-add');
-
- const newTr = `
-<tr class="hide">
-<td class="pt-3-half" contenteditable="true">Working</td>
-<td class="pt-3-half" contenteditable="true">25</td>
-<td class="pt-3-half" contenteditable="true">2019-08-23 15:30:00</td>
-<td class="pt-3-half" contenteditable="true">2019-08-23 15:55:00</td>
-<td>
-  <span class="table-remove"><i type="button"
-    class="material-icons white-text red">clear</i></span>
-<span class="table-up"><i type="button"
-      class="material-icons">vertical_align_top</i></span>
-<span class="table-down"><i type="button"
-        class="material-icons">vertical_align_bottom</i></span>
-</td>
-</tr>`;
-
 /* EVENT LISTENERS FOR START AND RESET BUTTONS */
 startBtn.addEventListener('click', () => {
   clearInterval(countdown);
@@ -45,7 +25,18 @@ startBtn.addEventListener('click', () => {
   if (!isPaused) {
     countdown = setInterval(timer, 1000);
   }
-  updateTracking();
+  updateTracking(2);
+})
+
+endBtn.addEventListener('click', () => {
+  clearInterval(countdown);
+  if(!isPaused || !isBreak){
+    updateTracking(3);
+    seconds = workTime * 60;
+    countdown = 0;
+    isPaused = true;
+    isBreak = true;
+  }
 })
 
 resetBtn.addEventListener('click', () => {
@@ -117,25 +108,66 @@ window.setInterval(updateHTML, 100);
 
 document.onclick = updateHTML;
 
-// Update Tracking table
-function updateTracking() {
+/*
+  @desc Update Tracking table
+  @param  {Number} $updatingCol - Column of table where timestamp is insert
+  @return {}
+ */
+function updateTracking(updatingCol) {
   const TotalRow = $tableID.find('tbody tr').length
-  
-  if (TotalRow <= 1) {
-    $tableID.find('table').append(newTr);
-  }
-  // const $row = $(this).parents('tr');
   var table = document.getElementById("table");
   var row = table.getElementsByTagName("tr")[TotalRow];
-  var td = row.getElementsByTagName("td")[2];
+  
+  // const $row = $(this).parents('tr');
 
-  td.innerHTML = new Date();
+  if(TotalRow <= 1){
+      $('tbody').append(newTr);
+  }
+
+  const td = row.getElementsByTagName("td")[updatingCol];
+  const td3 = row.getElementsByTagName("td")[3];
+  const TdValue = td.innerHTML.trim().replace("<br>", "");
+  const Td3Value = td3.innerHTML.trim().replace("<br>", "");
+  
+  if (TdValue == "" ){
+    td.innerHTML = new Date();
+  // if TotalRow is less than 1 or Table donot have value
+  }else if (TotalRow <= 1 || Td3Value != "") {
+     const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+     $tableID.find('table').append($clone);
+     const TotalRow = $tableID.find('tbody tr').length
+     const  lastrow = table.getElementsByTagName("tr")[TotalRow];
+     lastrow.getElementsByTagName("td")[2].innerHTML = new Date();
+     lastrow.getElementsByTagName("td")[3].innerHTML = "";
+  }
 
 }
 
 // addded for table-editable
-$AddTable.on('click', () => {
+const $tableID = $('#table');
+const $BTN = $('#export-btn');
+const $EXPORT = $('#export');
+const $AddTable = $('.table-add');
 
+ const newTr = `
+<tr class="hide">
+<td class="pt-3-half" contenteditable="true">Working</td>
+<td class="pt-3-half" contenteditable="true">25</td>
+<td class="pt-3-half" contenteditable="true"></td>
+<td class="pt-3-half" contenteditable="true"></td>
+<td>
+  <span class="table-remove"><i type="button"
+    class="material-icons white-text red">clear</i></span>
+<span class="table-up"><i type="button"
+      class="material-icons">vertical_align_top</i></span>
+<span class="table-down"><i type="button"
+        class="material-icons">vertical_align_bottom</i></span>
+</td>
+</tr>`;
+
+
+//  $('.table-add').on('click', 'i', () => {
+$AddTable.on('click', () => {
    const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
    
    if ($tableID.find('tbody tr').length === 0) {
@@ -145,8 +177,9 @@ $AddTable.on('click', () => {
  });
 
  $tableID.on('click', '.table-remove', function () {
-
+  if ($tableID.find('tbody tr').length > 1) {
    $(this).parents('tr').detach();
+  }
  });
 
  $tableID.on('click', '.table-up', function () {
@@ -161,7 +194,6 @@ $AddTable.on('click', () => {
  });
 
  $tableID.on('click', '.table-down', function () {
-
    const $row = $(this).parents('tr');
    $row.next().after($row.get(0));
  });
